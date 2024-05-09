@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Page Title</title>
+        <link rel="stylesheet" href="index2.css">
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        
+	</head>
+	<body>
+        <div style="display: flex;justify-content: center;align-items: center;gap: 5rem;">
+            <h3>Readings</h3>
+            <p id="left" >Left:</p>
+            <p id="right" >Right:</p>
+            <p id="speed" >speed:</p>
+            <p id="rear" >rear:</p>
+        </div>
+        <div style="display: flex;justify-content: center;align-items: center;gap: 5rem">
+            <button id="balance">Balance</button>
+            <button id="speed100">speed 100%</button>
+            <button id="speed50">speed 50%</button>
+            <button id="speedturnOff">Turn Off Engine</button>
+        </div>
+        <div style="display: flex;justify-content: center;align-items: center; margin-top: 4rem;">
+            <div>
+                <div class="game-wrapper">
+                <div class="joystick-wrapper">
+                <p></p>
+		        <div class="arrow" id="ArrowUp"></div>
+                <p></p>
+                <div class="arrow" id="ArrowLeft"></div>
+                <p></p>
+                <div class="arrow" id="ArrowRight"></div>
+                <p></p>
+                <div class="arrow" id="ArrowDown"></div>
+                <p></p>
+                </div>
+
+                <div hidden class="ball" id="ball"></div>
+                </div>
+            </div>
+            <div>
+                <div class="game-wrapper">
+                <div class="joystick-wrapper">
+                <p></p>
+		        <div class="arrow" id="ArrowUp2"></div>
+                <p></p>
+                <div class="arrow" id="ArrowLeft2"></div>
+                <p></p>
+                <div class="arrow" id="ArrowRight2"></div>
+                <p></p>
+                <div class="arrow" id="ArrowDown2"></div>
+                <p></p>
+                </div>
+                <div hidden class="ball" id="ball2"></div>
+                </div>
+            </div>
+        </div>
+	</body>
+    <script src="index2.js"></script>
+</html>

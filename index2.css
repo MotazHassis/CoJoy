@@ -1,0 +1,57 @@
+
+.game-wrapper{
+    margin: 50px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 50px;
+}
+
+.joystick-wrapper{
+
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    grid-template-rows: repeat(3, 100px);
+
+}
+.arrow {
+margin: auto;
+  width: 0; 
+  height: 0; 
+  border-left: 50px solid transparent;
+  border-right: 50px solid transparent;
+  
+  border-bottom: 50px solid black;
+  cursor: pointer;
+}
+
+.arrow:hover{
+  border-bottom: 50px solid rgb(44, 143, 255);
+}
+
+.joystick-wrapper div:nth-of-type(2){
+transform: rotate(-90deg);
+}
+.joystick-wrapper div:nth-of-type(3){
+transform: rotate(90deg);
+}
+.joystick-wrapper div:nth-of-type(4){
+transform: rotate(180deg);
+}
+
+.ball{
+    position: relative;
+    height: 30px;
+    width: 30px;
+    background-color: red;
+    border-radius: 50%;
+    display: none;
+}
+
+.pressed{
+    border-bottom: 50px solid rgb(71, 243, 255);
+}
+
+.pressed:hover{
+    border-bottom: 50px solid rgb(71, 243, 255);
+}
