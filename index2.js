@@ -10,12 +10,130 @@ ball.style.left = '90px';
 ball2.style.top = '90px';
 ball2.style.left = '90px';
 keepMoving = null;
+var upDown = { left: 0, right: 0 }
+var leftRight = { left: 0, right: 0 }
+var rearleftRight={rear:90}
+function increseup(vl, vr) {
+    if (vl - 30 < 0) {
+        vl=0
+    }
+    if (vr + 30 > 180) {
+        vr=180
+    }
+    if (vl - 30 >= 0) {
+        vl = vl - 30;
+    }
+    if (vr + 30 <= 180) {
+        vr = vr + 30;
+    }
+    upDown.left = vl;
+    upDown.right=vr
+    axios.put('https://pppserver.onrender.com/myupdate/readingsbalance', { left:upDown.left,right:upDown.right })
+}
+function decreaseDown(vr,vl) {
+    if (vl - 30 < 30) {
+        vl=30
+    }
+    if (vr + 30 > 150) {
+        vr=150
+    }
+    if (vl - 30 >= 30) {
+        vl = vl - 30;
+    }
+    if (vr + 30 <= 150) {
+        vr = vr + 30;
+    }
+    upDown.left = vr;
+    upDown.right=vl
+    axios.put('https://pppserver.onrender.com/myupdate/readingsbalance', { left:upDown.left,right:upDown.right })
+}
+function goleft(vl, vr) {
+    if (vl >= 150) {
+        vl = 150;
+    }
+    if (vr >= 180) {
+        vr = 180;
+    }
+    if (vl + 30 <= 150) {
+        vl = vl + 30;
+    }
+    if (vr + 30 <= 180) {
+        vr = vr + 30;
+    }
+    upDown.left = vl;
+    upDown.right=vr
+    axios.put('https://pppserver.onrender.com/myupdate/readingsbalance', { left:upDown.left,right:upDown.right })
+    
+}
+function goRight(vl, vr) {
+    if (vl <= 0) {
+        vl = 0;
+    }
+    if (vr <= 30) {
+        vr = 30;
+    }
+    if (vl - 30 >= 0) {
+        vl = vl - 30;
+    }
+    if (vr - 30 >= 30) {
+        vr = vr - 30;
+    }
+    upDown.left = vl;
+    upDown.right=vr
+    axios.put('https://pppserver.onrender.com/myupdate/readingsbalance', { left:upDown.left,right:upDown.right })
+    
+}
+function rearLeft(v) {
 
+    if (v <= 30) {
+        v = 30;
+    }
+    if (v - 30 >= 30) {
+        v = v - 30;
+    }
+    rearleftRight.rear = v
+    axios.put('https://pppserver.onrender.com/myupdate/readingsrear', { rear: rearleftRight.rear })
+}
+function rearRight(v) {
+    if (v >= 150) {
+        v = 150;
+    }
+    if (v + 30 <= 150) {
+        v = v + 30;
+    }
+    rearleftRight.rear = v
+    axios.put('https://pppserver.onrender.com/myupdate/readingsrear', { rear: rearleftRight.rear })
+}
 //buttons section
+//--
+function vertical_left() {
+    console.log("Button balance clicked!");
+    axios.put('https://pppserver.onrender.com/myupdate/readingsvertical', { vertical:180})
+}
+const button6 = document.getElementById("vertical-left");
+button6.addEventListener("click", vertical_left);
+function vertical_center() {
+    console.log("Button balance clicked!");
+    axios.put('https://pppserver.onrender.com/myupdate/readingsvertical', { vertical:90})
+}
+const button7 = document.getElementById("vertical-center");
+button7.addEventListener("click", vertical_center);
+
+function vertical_right() {
+    console.log("Button balance clicked!");
+    axios.put('https://pppserver.onrender.com/myupdate/readingsvertical', { vertical:0})
+}
+const button5 = document.getElementById("vertical-right");
+button5.addEventListener("click", vertical_right);
+
+
+//---
+
 function balance() {
     console.log("Button balance clicked!");
-    axios.put('https://pppserver.onrender.com/myupdate/readingsbalance', { left:90,right:90 })
-}
+    axios.put('https://pppserver.onrender.com/myupdate/readingsbalance', { left: 90, right: 90 })
+    axios.put('https://pppserver.onrender.com/myupdate/readingsrear', { rear: 90 })
+}   
 const button = document.getElementById("balance");
 button.addEventListener("click", balance);
 
@@ -48,10 +166,16 @@ function fun1() {
                 ball.style.left = response.data.right + 'px';
                 ball2.style.top = response.data.speed + 'px';
                 ball2.style.left = response.data.rear + 'px';
+                upDown.left = response.data.left;
+                upDown.right = response.data.right;
+                leftRight.left = response.data.left;
+                leftRight.right = response.data.right;
+                rearleftRight.rear = response.data.rear;
                 document.getElementById("left").innerHTML = 'Left: '+ball.style.top;
                 document.getElementById("right").innerHTML = 'Right: ' + ball.style.left;
                 document.getElementById("speed").innerHTML = 'Speed: '+ball2.style.top;
-                document.getElementById("rear").innerHTML = 'Rear: '+ball2.style.left;
+                document.getElementById("rear").innerHTML = 'Rear: ' + ball2.style.left;
+                document.getElementById("vertical").innerHTML = 'vertical: ' + response.data.vertical;
             })
             .catch((err) => {
                 console.log('fail sending data to backend')
@@ -81,49 +205,16 @@ const stopMove = () => {
 const moveBall = (direction) => {
     switch (direction) {
         case "ArrowDown":
-            if ((parseInt(ball.style.top) - 30) >= 0) {
-                ball.style.top = parseInt(ball.style.top) - 30 + 'px';
-                console.log('y: ', parseInt(ball.style.top))
-                
-            }
-            else {
-                ball.style.top = 0 + 'px'
-                console.log(ball.style.top)
-            }
-            axios.put('https://pppserver.onrender.com/myupdate/readingsleft', { left: parseInt(ball.style.top) })
+            decreaseDown(upDown.left, upDown.right);
             break;
         case "ArrowUp":
-            if ((parseInt(ball.style.top) + 30) <= 180) {
-                ball.style.top = parseInt(ball.style.top) + 30 + 'px';
-                console.log('y: ', parseInt(ball.style.top))
-            }
-            else {
-                ball.style.top = 180 + 'px'
-                console.log(ball.style.top)
-            }
-            axios.put('https://pppserver.onrender.com/myupdate/readingsleft', { left: parseInt(ball.style.top) })
+            increseup(upDown.left, upDown.right);
             break;
         case "ArrowRight":
-            if ((parseInt(ball.style.left) + 30) <= 180) {
-                ball.style.left = parseInt(ball.style.left) + 30 + 'px';
-                console.log('x: ', parseInt(ball.style.left))
-            }
-            else {
-                ball.style.left = 180 + 'px'
-                console.log(ball.style.left)
-            }
-            axios.put('https://pppserver.onrender.com/myupdate/readingsright', { right: parseInt(ball.style.left) })
+            goRight(upDown.left, upDown.right);
             break;
         case "ArrowLeft":
-            if ((parseInt(ball.style.left) - 30) >= 0) {
-                ball.style.left = parseInt(ball.style.left) - 30 + 'px';
-                console.log('x: ', parseInt(ball.style.left))
-            }
-            else {
-                ball.style.left = 0 + 'px'
-                console.log(ball.style.left)
-            }
-            axios.put('https://pppserver.onrender.com/myupdate/readingsright', { right: parseInt(ball.style.left) })
+            goleft(upDown.left, upDown.right);
             break;
         case "ArrowDown2":
             if ((parseInt(ball2.style.top) - 100) >= 1000) {
@@ -149,26 +240,10 @@ const moveBall = (direction) => {
             axios.put('https://pppserver.onrender.com/myupdate/readingsspeed', { speed: parseInt(ball2.style.top) })
             break;
         case "ArrowRight2":
-            if ((parseInt(ball2.style.left) + 30) <= 180) {
-                ball2.style.left = parseInt(ball2.style.left) + 30 + 'px';
-                console.log('x: ', parseInt(ball2.style.left))
-            }
-            else {
-                ball2.style.left = 180 + 'px'
-                console.log(ball2.style.left)
-            }
-            axios.put('https://pppserver.onrender.com/myupdate/readingsrear', { rear: parseInt(ball2.style.left) })
+            rearRight(rearleftRight.rear)
             break;
         case "ArrowLeft2":
-            if ((parseInt(ball2.style.left) - 30) >= 0) {
-                ball2.style.left = parseInt(ball2.style.left) - 30 + 'px';
-                console.log('x: ', parseInt(ball2.style.left))
-            }
-            else {
-                ball2.style.left = 0 + 'px'
-                console.log(ball2.style.left)
-            }
-            axios.put('https://pppserver.onrender.com/myupdate/readingsrear', { rear: parseInt(ball2.style.left) })
+            rearLeft(rearleftRight.rear)
             break;
     }
 }
