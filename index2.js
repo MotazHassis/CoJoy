@@ -108,7 +108,7 @@ function rearRight(v) {
 //--
 function vertical_left() {
     console.log("Button balance clicked!");
-    axios.put('https://pppserver.onrender.com/myupdate/readingsvertical', { vertical:180})
+    axios.put('https://pppserver.onrender.com/myupdate/readingsvertical', { vertical:140})
 }
 const button6 = document.getElementById("vertical-left");
 button6.addEventListener("click", vertical_left);
@@ -121,7 +121,7 @@ button7.addEventListener("click", vertical_center);
 
 function vertical_right() {
     console.log("Button balance clicked!");
-    axios.put('https://pppserver.onrender.com/myupdate/readingsvertical', { vertical:0})
+    axios.put('https://pppserver.onrender.com/myupdate/readingsvertical', { vertical:60})
 }
 const button5 = document.getElementById("vertical-right");
 button5.addEventListener("click", vertical_right);
